@@ -43,7 +43,6 @@ object MyModule {
     def loop(n: Int, prev: Int, next: Int): Int = {
       n match {
         case 0 => prev
-        case 1 => next
         case _ => loop(n - 1, next, prev + next)
       }
     }
