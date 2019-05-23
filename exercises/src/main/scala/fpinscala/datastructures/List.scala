@@ -107,5 +107,10 @@ object List { // `List` companion object. Contains functions for creating and wo
       b + 1
     }
 
+  def reverse[A](l: List[A]): List[A] =
+    foldLeft(l, Nil: List[A]) { (b, a) =>
+      Cons(a, b)
+    }
+
   def map[A, B](l: List[A])(f: A => B): List[B] = ???
 }
