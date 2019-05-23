@@ -93,7 +93,7 @@ object List { // `List` companion object. Contains functions for creating and wo
   def foldLeft[A, B](l: List[A], z: B)(f: (B, A) => B): B =
     l match {
       case Nil         => z
-      case Cons(x, xs) => foldLeft(xs, f((z, x)))(f)
+      case Cons(x, xs) => foldLeft(xs, f(z, x))(f)
     }
 
   def sum3(ns: List[Int]): Int =
