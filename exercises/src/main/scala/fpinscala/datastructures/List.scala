@@ -128,5 +128,10 @@ object List { // `List` companion object. Contains functions for creating and wo
   def flatConcat[A](l: List[List[A]]): List[A] =
     foldRight(l, List[A]())(append)
 
+  def mapPlusOne(l: List[Int]): List[Int] =
+    foldRight(l, List[Int]()) { (n, l) =>
+      Cons(n + 1, l)
+    }
+
   def map[A, B](l: List[A])(f: A => B): List[B] = ???
 }
