@@ -142,4 +142,9 @@ object List { // `List` companion object. Contains functions for creating and wo
     foldRight(l, List[B]()) { (a, b) =>
       Cons(f(a), b)
     }
+
+  def filter[A](l: List[A])(p: A => Boolean): List[A] =
+    foldRight(l, List[A]()) { (a, b) =>
+      if (p(a)) Cons(a, b) else b
+    }
 }
