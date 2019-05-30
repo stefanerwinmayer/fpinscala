@@ -133,5 +133,10 @@ object List { // `List` companion object. Contains functions for creating and wo
       Cons(n + 1, l)
     }
 
+  def doubleListToStringList(l: List[Double]): List[String] =
+    foldRight(l, List[String]()) { (n, l) =>
+      Cons(n.toString, l)
+    }
+
   def map[A, B](l: List[A])(f: A => B): List[B] = ???
 }
