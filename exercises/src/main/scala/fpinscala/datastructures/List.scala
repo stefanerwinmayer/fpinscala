@@ -147,4 +147,7 @@ object List { // `List` companion object. Contains functions for creating and wo
     foldRight(l, List[A]()) { (a, b) =>
       if (p(a)) Cons(a, b) else b
     }
+
+  def flatMap[A, B](l: List[A])(f: A => List[B]): List[B] =
+    flatConcat(map(l)(f))
 }
