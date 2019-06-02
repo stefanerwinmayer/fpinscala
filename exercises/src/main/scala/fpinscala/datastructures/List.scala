@@ -155,4 +155,11 @@ object List { // `List` companion object. Contains functions for creating and wo
     flatMap(l) { a =>
       if (p(a)) List(a) else List()
     }
+
+  def zip(a1: List[Int], a2: List[Int]): List[Int] =
+    (a1, a2) match {
+      case (Nil, _)                   => Nil
+      case (_, Nil)                   => Nil
+      case (Cons(x, xs), Cons(y, ys)) => Cons(x + y, zip(xs, ys))
+    }
 }
