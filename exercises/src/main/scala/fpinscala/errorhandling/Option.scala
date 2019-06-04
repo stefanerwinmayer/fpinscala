@@ -60,7 +60,12 @@ object Option {
       )
     }
 
-  def map2[A, B, C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] = ???
+  def map2[A, B, C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] =
+    a.flatMap { aa =>
+      b.map { bb =>
+        f(aa, bb)
+      }
+    }
 
   def sequence[A](a: List[Option[A]]): Option[List[A]] = ???
 
