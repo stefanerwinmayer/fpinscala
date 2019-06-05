@@ -18,7 +18,18 @@ trait Stream[+A] {
     case Empty      => None
     case Cons(h, t) => if (f(h())) Some(h()) else t().find(f)
   }
-  def take(n: Int): Stream[A] = ???
+
+  def toList: List[A] =
+    this match {
+      case Empty       => Nil
+      case Cons(x, xs) => x() :: xs().toList
+    }
+
+  def take(n: Int): Stream[A] =
+    this match {
+      case Cons(x, xs) if n != 0 => cons(x(), xs().take(n - 1))
+      case _                     => empty
+    }
 
   def drop(n: Int): Stream[A] = ???
 
