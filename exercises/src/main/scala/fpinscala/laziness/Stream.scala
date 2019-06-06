@@ -40,7 +40,11 @@ trait Stream[+A] {
       case _                    => this
     }
 
-  def takeWhile(p: A => Boolean): Stream[A] = ???
+  def takeWhile(p: A => Boolean): Stream[A] =
+    this match {
+      case Cons(x, xs) if p(x()) => cons(x(), xs().takeWhile(p))
+      case _                     => empty
+    }
 
   def forAll(p: A => Boolean): Boolean = ???
 
