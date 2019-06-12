@@ -85,6 +85,9 @@ trait Stream[+A] {
   def constant[A](a: A): Stream[A] =
     cons(a, constant(a))
 
+  def from(n: Int): Stream[Int] =
+    cons(n, from(n + 1))
+
   def startsWith[B](s: Stream[B]): Boolean = ???
 }
 case object Empty extends Stream[Nothing]
