@@ -82,6 +82,39 @@ trait Stream[+A] {
       f(a).append(b)
     }
 
+  def mapFromUnfold[B](f: A => B): Stream[B] =
+    unfold(this) {
+      case Empty       => None
+      case Cons(x, xs) => Some((f(x()), xs()))
+    }
+
+  def takeFromUnfold(n: Int): Stream[A] =
+    unfold((this, n)) {
+      case (Cons(x, xs), n_) if n_ > 0 => Some((x(), (xs(), n_ - 1)))
+      case _                           => None
+    }
+
+  def takeWhileFromUnfold(p: A => Boolean): Stream[A] =
+    unfold(this) {
+      case Cons(x, xs) if p(x()) => Some((x(), xs()))
+      case _                     => None
+    }
+
+  def zipWithFromUnfold[B, C](s2: Stream[B])(f: (A, B) => C): Stream[C] =
+    unfold((this, s2)) {
+      case (Cons(a, as), Cons(b, bs)) => Some(f(a(), b()), (as(), bs()))
+      case _                          => None
+    }
+
+  def zipAllFromUnfold[B](s2: Stream[B]): Stream[(Option[A], Option[B])] =
+    unfold((this, s2)) {
+      case (Cons(a, as), Cons(b, bs)) =>
+        Some((Some(a()), Some(b())), (as(), bs()))
+      case (Cons(a, as), Empty) => Some((Some(a()), None), (as(), empty))
+      case (Empty, Cons(b, bs)) => Some((None, Some(b())), (empty, bs()))
+      case _                    => None
+    }
+
   def startsWith[B](s: Stream[B]): Boolean = ???
 }
 case object Empty extends Stream[Nothing]
