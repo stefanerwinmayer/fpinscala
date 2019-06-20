@@ -41,11 +41,23 @@ object RNG {
     (from0toExcluding1, rng_)
   }
 
-  def intDouble(rng: RNG): ((Int, Double), RNG) = ???
+  def intDouble(rng: RNG): ((Int, Double), RNG) = {
+    val (randInd, rngNext) = rng.nextInt
+    val (randDouble, rngLast) = double(rngNext)
+    ((randInd, randDouble), rngLast)
+  }
 
-  def doubleInt(rng: RNG): ((Double, Int), RNG) = ???
+  def doubleInt(rng: RNG): ((Double, Int), RNG) = {
+    val ((randInt, randDouble), rng_) = intDouble(rng)
+    ((randDouble, randInt), rng_)
+  }
 
-  def double3(rng: RNG): ((Double, Double, Double), RNG) = ???
+  def double3(rng: RNG): ((Double, Double, Double), RNG) = {
+    val (rand1, rng1) = double(rng)
+    val (rand2, rng2) = double(rng1)
+    val (rand3, rng3) = double(rng2)
+    ((rand1, rand2, rand3), rng3)
+  }
 
   def ints(count: Int)(rng: RNG): (List[Int], RNG) = ???
 
