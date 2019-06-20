@@ -35,7 +35,11 @@ object RNG {
     (nonNegativeRand, rng_)
   }
 
-  def double(rng: RNG): (Double, RNG) = ???
+  def double(rng: RNG): (Double, RNG) = {
+    val (rand, rng_) = nonNegativeInt(rng)
+    val from0toExcluding1 = (rand - 1) / Integer.MAX_VALUE.toDouble
+    (from0toExcluding1, rng_)
+  }
 
   def intDouble(rng: RNG): ((Int, Double), RNG) = ???
 
