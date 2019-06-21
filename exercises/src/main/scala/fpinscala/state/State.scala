@@ -71,7 +71,18 @@ object RNG {
     loop(count, rng, List())
   }
 
-  def map2[A, B, C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] = ???
+  def doubleFromMap(rng: RNG): RNG => (Double, RNG) = {
+    map(nonNegativeInt) { rand =>
+      (rand - 1) / Integer.MAX_VALUE.toDouble
+    }
+  }
+
+  def map2[A, B, C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] =
+    rng => {
+      val (a, rngNext) = ra(rng)
+      val (b, rngFinal) = rb(rngNext)
+      (f(a, b), rngFinal)
+    }
 
   def sequence[A](fs: List[Rand[A]]): Rand[List[A]] = ???
 
