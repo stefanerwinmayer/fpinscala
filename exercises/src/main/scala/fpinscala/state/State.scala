@@ -100,6 +100,9 @@ object RNG {
       }
     }
 
+  def intsFromSequence(count: Int): Rand[List[Int]] =
+    sequence(List.fill(count)(int))
+
   def flatMap[A, B](f: Rand[A])(g: A => Rand[B]): Rand[B] = ???
 }
 
